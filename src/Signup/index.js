@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./index.css"
@@ -13,7 +13,7 @@ const Signup = () => {
     }
     const handleForm = async (e) => {
         e.preventDefault()
-        const signUpRequest = await axios.post("http://localhost:3005/user/signup", userDetails)
+        const signUpRequest = await axios.post("https://deploying-backend-10.onrender.com/user/signup", userDetails)
         const { message } = signUpRequest.data
         setUserDetails({ "username": '', "email": '', "password": '' })
         if (signUpRequest.status === 200) {
@@ -43,7 +43,8 @@ const Signup = () => {
                 <br />
                 <input value={userDetails.password} placeholder='Enter Password' onChange={handleInput} name="password" id='password' type="password" required />
                 <br />
-                <button type="submit" className="submit-button">Login</button>
+                <p>Already have an account? <Link to='/'>Login</Link></p>
+                <button type="submit" className="submit-button">SignUp</button>
             </form>
         </div>
     )

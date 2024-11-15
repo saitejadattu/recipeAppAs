@@ -2,7 +2,7 @@ import React from 'react'
 import axios from "axios"
 import { useState } from "react"
 import Cookies from "js-cookie"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./index.css"
@@ -16,8 +16,9 @@ const Login = () => {
     }
     const handleForm = async (e) => {
         e.preventDefault()
-        const loginRequest = await axios.post("http://localhost:3005/user/login", userDetails)
-        const { jwtToken, message,status } = loginRequest.data
+        const loginRequest = await axios.post("https://deploying-backend-10.onrender.com/user/login", userDetails)
+        console.log(loginRequest)
+        const { jwtToken, message, status } = loginRequest.data
         if (status === "success") {
             Cookies.set("jwtToken", jwtToken)
             toast(message)
@@ -44,7 +45,7 @@ const Login = () => {
                 <br />
                 <input value={userDetails.password} placeholder='Enter Password' onChange={handleInput} name="password" id='password' type="password" required />
                 <br />
-                <p><a href='/signup'>signup</a> click here to redirect signup page</p>
+                <p>New to recipe platform? <Link to='/signup'>signup</Link></p>
                 <button className='submit-button' type="submit">Login</button>
             </form>
         </div>

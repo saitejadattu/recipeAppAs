@@ -18,7 +18,7 @@ const UpdateRecipe = () => {
     }
     const { id } = useParams()
     const fetchRecipe = async () => {
-        const response = await axios.get(`http://localhost:3005/recipe/get/${userData.id}/${id}`, {
+        const response = await axios.get(`https://deploying-backend-10.onrender.com/recipe/get/${userData.id}/${id}`, {
             headers: {
                 "Authorization": `Bearer ${jwtToken}`
             }
@@ -27,22 +27,24 @@ const UpdateRecipe = () => {
     }
     useEffect(() => {
         fetchRecipe()
-    }, [])
+    }, []
+)
     const handleForm = async (e) => {
         e.preventDefault()
-        const response = await axios.put(`http://localhost:3005/recipe/put/${userData.id}/${id}`, recipe, {
+        const response = await axios.put(`https://deploying-backend-10.onrender.com/recipe/put/${userData.id}/${id}`, recipe, {
             headers: {
                 "Authorization": `Bearer ${jwtToken}`,
                 "Content-Type": "application/json"
             }
         })
-        console.log(response)
+        toast(response.data.message)
     }
     return (
         <div className='add-container'>
             <NavBar />
             <div className='add-form-container'>
                 <form onSubmit={handleForm} className='form-container'>
+                    <ToastContainer/>
                     <h1 className='login-heading'>Add</h1>
                     <label htmlFor='title'>Title</label>
                     <input value={recipe.title} onChange={handlerecipe} type="text" placeholder="Enter recipe name" name="title" id='title' />

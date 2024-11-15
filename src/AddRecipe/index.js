@@ -19,13 +19,14 @@ const AddRecipe = () => {
     const handleForm = async (e) => {
         e.preventDefault()
         recipe["ingredients"] = await (recipe.ingredients).split(',').map(item => item.trim())
-        const response = await axios.post(`http://localhost:3005/recipe/post/${id}`, recipe, {
+        const response = await axios.post(`https://deploying-backend-10.onrender.com/recipe/post/${id}`, recipe, {
             headers: {
                 "Authorization": `Bearer ${jwtToken}`,
                 "Content-Type": "application/json"
             }
         })
-        // console.log(response)
+        console.log(response)
+        toast(response.data.message)
         setRecipe({ title: '', category: '', ingredients: "", instructions: '', cooking_time: 0 })
     }
     return (
@@ -33,6 +34,7 @@ const AddRecipe = () => {
             <NavBar />
             <div className='add-form-container'>
                 <form onSubmit={handleForm} className='form-container'>
+                    <ToastContainer/>
                     <h1 className='login-heading'>Add</h1>
                     <label htmlFor='title'>Title</label>
                     <input value={recipe.title} onChange={handlerecipe} type="text" placeholder="Enter recipe name" name="title" id='title' required />
